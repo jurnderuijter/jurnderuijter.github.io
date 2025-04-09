@@ -16,7 +16,27 @@
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #007bff;
         }
 
         .image-grid {
@@ -52,11 +72,18 @@
             font-size: 0.9rem;
             color: #333;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
     <h1>Star Wars Card Images</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search cards by name...">
+    </div>
     <div id="imageContainer" class="image-grid">
         <!-- Images will be inserted here by JavaScript -->
     </div>

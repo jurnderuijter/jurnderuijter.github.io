@@ -1,3 +1,6 @@
+// Store all card wrappers for filtering
+let cardWrappers = [];
+
 // Function to fetch and load the card list data
 async function loadCardList() {
     try {
@@ -28,11 +31,15 @@ async function loadCardList() {
                 // Add title below the image
                 const wrapper = document.createElement('div');
                 wrapper.className = 'card-wrapper';
+                wrapper.dataset.name = cardName.toLowerCase(); // Add name as data attribute for filtering
                 wrapper.appendChild(img);
 
                 const title = document.createElement('p');
                 title.textContent = cardName;
                 wrapper.appendChild(title);
+
+                // Store wrapper for filtering
+                cardWrappers.push(wrapper);
 
                 // Add wrapper to container
                 container.appendChild(wrapper);
@@ -43,12 +50,34 @@ async function loadCardList() {
         const loadedImages = container.getElementsByTagName('img').length;
         console.log(`Loaded ${loadedImages} images`);
 
+        // Initialize search functionality
+        initializeSearch();
+
     } catch (error) {
         console.error('Error loading card list:', error);
         // Display error message on the page
         const container = document.getElementById('imageContainer');
         container.innerHTML = `<p style="color: red;">Error loading images: ${error.message}</p>`;
     }
+}
+
+// Function to initialize search functionality
+function initializeSearch() {
+    const searchInput = document.getElementById('searchInput');
+
+    // Add input event listener for real-time filtering
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+
+        cardWrappers.forEach(wrapper => {
+            const cardName = wrapper.dataset.name;
+            if (cardName.includes(searchTerm)) {
+                wrapper.classList.remove('hidden');
+            } else {
+                wrapper.classList.add('hidden');
+            }
+        });
+    });
 }
 
 // Initialize when the page loads
